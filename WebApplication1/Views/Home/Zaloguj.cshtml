@@ -1,0 +1,42 @@
+﻿@{
+    ViewData["Title"] = "Logowanie";
+}
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Permissions-Policy" content="geolocation 'self'; microphone 'self'; camera 'self'">
+    <meta http-equiv="Permissions-Policy-Report-Only" content="geolocation 'self'; microphone 'self'; camera 'self'">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <script src="https://apis.google.com/js/platform.js" async defer></script>
+    <title>Rejestracja</title>
+</head>
+<body>
+    <div class="text-left">
+        <h1 class="display-4">Welcome</h1>
+        <p>Loguj się</p>
+
+        <div class="row">
+            <div class="col-md-4 offset-md-4">
+                <form method="post" action="/login">
+                    <!-- Ustaw odpowiedni action -->
+                    <div class="mb-3">
+                        <label for="inputEmail" class="form-label">Adres email</label>
+                        <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Wpisz email">
+                        <div id="emailHelp" class="form-text">Nie udostępniamy nikomu Twojego adresu email.</div>
+                    </div>
+                    <div class="mb-3">
+                        <label for="inputPassword" class="form-label">Hasło</label>
+                        <input type="password" class="form-control" id="inputPassword" placeholder="Hasło">
+                    </div>
+
+                    <button type="button" class="btn btn-primary" id="but_zaloguj">Zaloguj się</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="/lib/bootstrap/dist/js/Zaloguj.js"></script>
+</body>
+</html>

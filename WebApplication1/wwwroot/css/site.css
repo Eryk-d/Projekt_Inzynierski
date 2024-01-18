@@ -1,0 +1,43 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.nav-link:hover {
+    background-color: #B1DAEF;
+    transition: background-color 0.3s;
+}
+
+.footer {
+    line-height: normal; /* Ustawienie standardowej wysokoœci linii */
+    padding: 10px 0; /* Dodanie paddingu góra-dó³ */
+    background-color: #3399FF;
+    font-size: 18px;
+    color : #000000;
+    font-weight: 500;
+}
+
+.footer .container {
+    margin: 0 auto; /* Wyœrodkowanie kontenera i usuniêcie zewnêtrznych marginesów */
+    padding: 10px; /* Dodanie wewnêtrznego paddingu */
+}
+
+.footer a, .footer div {
+    line-height: 1.5; /* Ustawienie wysokoœci linii dla linków i divów w stopce */
+    margin: 0; /* Usuniêcie zewnêtrznych marginesów */
+    padding: 0; /* Usuniêcie wewnêtrznego paddingu */
+}

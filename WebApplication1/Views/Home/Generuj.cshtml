@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Generowanie haseł";
+    Func<string> generatePassword = () =>
+    {
+        var random = new Random();
+        var characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+        Func<int, string> generatePart = length =>
+            new string(Enumerable.Repeat(characters, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
+
+        return $"{generatePart(6)}-{generatePart(6)}-{generatePart(6)}";
+    };
+
+    var password = generatePassword();
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<p>Wygeneruj bezpieczne hasło:</p>
+
+<form method="post">
+    <input type="text" class="form-control" value="@password" readonly>
+    <button type="submit" class="btn btn-primary mt-2">Generuj nowe hasło</button>
+</form>
