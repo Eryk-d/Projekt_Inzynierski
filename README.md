@@ -1,1 +1,1 @@
-# WebApplication1
+# Aplikacja internetowa pozwalająca na bezpieczne przechowywanie haseł.
