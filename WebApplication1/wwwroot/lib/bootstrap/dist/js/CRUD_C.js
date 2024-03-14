@@ -18,6 +18,9 @@ form.addEventListener('submit', async (event)=>
             uid: auth.currentUser.uid
         });
         console.log("Document written with ID: ", docRef.id);
+        alert('Pomyślnie dodano nowe dane logowania.\nStrona zostanie odświeżona');
+        location.reload();
+
     } catch (e) {
         console.error("Error adding document: ", e);
     }
