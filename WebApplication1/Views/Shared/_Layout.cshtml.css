@@ -24,7 +24,7 @@ a {
 }
 
 .border-top {
-  border-top: 1px solid #e5e5e5;
+    border-top: 1px solid #e5e5e5;
 }
 .border-bottom {
   border-bottom: 1px solid #e5e5e5;
@@ -40,9 +40,28 @@ button.accept-policy {
 }
 
 .footer {
-  position: relative;
-  bottom: 0;
-  width: 100%;
-  white-space: nowrap;
-  line-height: 60px;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 150px;
+    background-color: #3399FF;
+}
+
+body, html {
+    margin: 0;
+    padding: 0;
+}
+body {
+    min-height: 100%;
+    position: relative;
+}
+
+html {
+    height: 100%;
+}
+
+.container {
+    min-height: 100%;
+    position: relative;
+    margin-bottom: 150px;
 }

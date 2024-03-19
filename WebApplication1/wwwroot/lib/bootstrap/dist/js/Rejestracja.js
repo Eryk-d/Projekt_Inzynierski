@@ -19,7 +19,7 @@ async function registerUser(email, password) {
         await setDoc(userRef, {
             email: email
         });
-
+        alert('Zarejestrowano nowego użytkownika')
         console.log("Użytkownik został zarejestrowany i dane zostały zapisane: ", user);
     } catch (error) {
         const errorCode = error.code;
