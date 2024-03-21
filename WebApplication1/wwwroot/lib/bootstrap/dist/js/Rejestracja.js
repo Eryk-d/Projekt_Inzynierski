@@ -19,8 +19,9 @@ async function registerUser(email, password) {
         await setDoc(userRef, {
             email: email
         });
-        alert('Zarejestrowano nowego użytkownika')
+        alert("Zarejestrowano nowego użytkownika\nZostaniesz przekierowany do zakładki Zaloguj się");
         console.log("Użytkownik został zarejestrowany i dane zostały zapisane: ", user);
+        window.location = "/Home/Zaloguj";
     } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
