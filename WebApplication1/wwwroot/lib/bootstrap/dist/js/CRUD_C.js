@@ -5,6 +5,7 @@ const form = document.querySelector('#form1');
 const title = document.querySelector('#title');
 const login = document.querySelector('#login');
 const pass = document.querySelector('#pass');
+const keys1 = document.querySelector('#key');
 
 async function generateKeyFromPassword(password, salt) {
     const keyMaterial = await window.crypto.subtle.importKey(
@@ -47,8 +48,9 @@ async function encryptData(plainText, password) {
 // Funkcja obsługi formularza
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const password = "123"; // Uwaga: używaj bezpieczniejszych metod generowania kluczy w produkcji
+    const password = key.value;
     const encryptedData = await encryptData(pass.value, password);
+
 
     try {
         const docRef = await addDoc(collection(db, "passwords"), {
