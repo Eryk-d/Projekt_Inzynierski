@@ -47,7 +47,7 @@ async function encryptData(plainText, password) {
 // Funkcja obsługi formularza
 form.addEventListener('submit', async (event) => {
     event.preventDefault();
-    const password = "123"; // Uwaga: używaj bezpieczniejszych metod generowania kluczy w produkcji
+    const password = key.value;
     const encryptedData = await encryptData(pass.value, password);
 
     try {

@@ -1,6 +1,7 @@
 ﻿import { auth, db } from "/lib/bootstrap/dist/js/Config.js";
 import { getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
+import { deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
 
 const card = document.querySelector('#card');
 const form = document.querySelector('#form2');
@@ -53,12 +54,22 @@ async function generateKeyFromPassword(password, salt) {
     );
 }
 
+async function deleteDocument(docId) {
+    try {
+        await deleteDoc(doc(db, "passwords", docId));
+        console.log(`Dokument ${docId} został usunięty.`);
+        // Tutaj możesz również odświeżyć listę dokumentów, aby odzwierciedlić usunięcie.
+    } catch (error) {
+        console.error("Błąd podczas usuwania dokumentu: ", error);
+    }
+}
+
+
 function getDataFromFirestore(userId) {
     const q = query(collection(db, "passwords"), where("uid", "==", userId));
     getDocs(q).then(querySnapshot => {
         querySnapshot.forEach(async (doc) => {
             const item = doc.data();
-
             // Odszyfrowanie hasła przed wyświetleniem
             const decryptedPass = await decryptData(item.pass, item.iv, item.salt, keys.value); //pobieramy keys z form2
             card.innerHTML +=
@@ -67,6 +78,7 @@ function getDataFromFirestore(userId) {
                 <p>Nazwa: ${item.title}</p>
                 <p>Login: ${item.login}</p>
                 <p>Hasło: ${decryptedPass}</p> <!-- Wyświetlanie odszyfrowanego hasła -->
+                <button type="button" class="delete_pass" data-doc-id="${doc.id}">Usuń</button>
             </div>
         </div><br>`;
 
@@ -92,3 +104,21 @@ form.addEventListener('submit', async (event) => {
     });
 
 });
+
+document.addEventListener('click', function (e) {
+    if (e.target && e.target.classList.contains('delete_pass')) {
+        const docId = e.target.getAttribute('data-doc-id');
+        // Dodanie okna z zapytaniem przed usunięciem
+        const isConfirmed = confirm("Czy na pewno chcesz usunąć ten element?");
+        if (isConfirmed) {
+            // Jeśli użytkownik kliknął "OK", kontynuuj z usunięciem
+            deleteDocument(docId);
+            location.reload();
+        } else {
+            // Jeśli użytkownik kliknął "Anuluj", nie rób nic
+            console.log("Operacja usunięcia anulowana.");
+        }
+    }
+});
+
+
