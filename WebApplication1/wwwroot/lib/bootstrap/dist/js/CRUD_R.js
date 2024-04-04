@@ -78,7 +78,7 @@ function getDataFromFirestore(userId) {
                 <p>Nazwa: ${item.title}</p>
                 <p>Login: ${item.login}</p>
                 <p>Hasło: ${decryptedPass}</p> <!-- Wyświetlanie odszyfrowanego hasła -->
-                <button type="button" class="delete_pass" data-doc-id="${doc.id}">Usuń</button>
+                <button type="button" class="btn btn-danger delete_pass" data-doc-id="${doc.id}">Usuń</button>
             </div>
         </div><br>`;
 

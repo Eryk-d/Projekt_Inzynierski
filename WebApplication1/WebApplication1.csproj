@@ -7,6 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Home\Contact-niezalogowany.cshtml.cs" />
+    <Compile Remove="Views\Home\ContactN.cshtml.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="Views\Home\Contact - kopiować.cshtml" />
+    <Content Remove="Views\Home\Contact-niezalogowany.cshtml" />
+    <Content Remove="Views\Home\ContactN.cshtml" />
+    <Content Remove="Views\Home\Index1.cshtml" />
+    <Content Remove="Views\Home\Index3.cshtml" />
+    <Content Remove="Views\Home\Security - kopiować.cshtml" />
     <Content Remove="wwwroot\lib\bootstrap\dist\js\CRUD_R.js" />
   </ItemGroup>
 
