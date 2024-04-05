@@ -18,6 +18,7 @@
     <Content Remove="Views\Home\Index1.cshtml" />
     <Content Remove="Views\Home\Index3.cshtml" />
     <Content Remove="Views\Home\Security - kopiować.cshtml" />
+    <Content Remove="wwwroot\lib\bootstrap\dist\js\CRUD_D.js" />
     <Content Remove="wwwroot\lib\bootstrap\dist\js\CRUD_R.js" />
   </ItemGroup>
 

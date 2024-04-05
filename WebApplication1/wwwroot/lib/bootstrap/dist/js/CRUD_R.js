@@ -56,9 +56,10 @@ async function generateKeyFromPassword(password, salt) {
 
 async function deleteDocument(docId) {
     try {
+        console.log(docId)
         await deleteDoc(doc(db, "passwords", docId));
         console.log(`Dokument ${docId} został usunięty.`);
-        // Tutaj możesz również odświeżyć listę dokumentów, aby odzwierciedlić usunięcie.
+        location.reload()
     } catch (error) {
         console.error("Błąd podczas usuwania dokumentu: ", error);
     }
@@ -113,7 +114,7 @@ document.addEventListener('click', function (e) {
         if (isConfirmed) {
             // Jeśli użytkownik kliknął "OK", kontynuuj z usunięciem
             deleteDocument(docId);
-            location.reload();
+            //location.reload();
         } else {
             // Jeśli użytkownik kliknął "Anuluj", nie rób nic
             console.log("Operacja usunięcia anulowana.");
