@@ -9,12 +9,14 @@
   <ItemGroup>
     <Compile Remove="Views\Home\Contact-niezalogowany.cshtml.cs" />
     <Compile Remove="Views\Home\ContactN.cshtml.cs" />
+    <Compile Remove="Views\Home\dodaj.cshtml.cs" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Remove="Views\Home\Contact - kopiować.cshtml" />
     <Content Remove="Views\Home\Contact-niezalogowany.cshtml" />
     <Content Remove="Views\Home\ContactN.cshtml" />
+    <Content Remove="Views\Home\dodaj.cshtml" />
     <Content Remove="Views\Home\Index1.cshtml" />
     <Content Remove="Views\Home\Index3.cshtml" />
     <Content Remove="Views\Home\Security - kopiować.cshtml" />

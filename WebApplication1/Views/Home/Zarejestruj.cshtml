@@ -8,32 +8,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Permissions-Policy" content="geolocation 'self'; microphone 'self'; camera 'self'">
     <meta http-equiv="Permissions-Policy-Report-Only" content="geolocation 'self'; microphone 'self'; camera 'self'">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <title>Zarejstruj Konto</title>
 
-    <title>Rejestracja</title>
+    <style>
+        .container {
+            max-width: 400px; /* Maksymalna szerokość kontenera formularza */
+            margin-top: 50px; /* Odstęp od góry */
+        }
+
+        .material-symbols-outlined {
+            font-size: 150px; /* Rozmiar ikony */
+            margin-bottom: 20px; /* Odstęp od elementów powyżej */
+            display: block; /* Ustawienie ikony jako bloku */
+            margin-left: auto; /* Wyśrodkowanie ikony poziomo */
+            margin-right: auto; /* Wyśrodkowanie ikony poziomo */
+        }
+
+        .form-text {
+            font-size: 14px; /* Rozmiar tekstu pomocy */
+        }
+    </style>
 </head>
 <body>
-    <div class="text-left">
-        <h1 class="display-4">Welcome</h1>
-        <p>Zarejestruj sie</p>
 
-        <div class="row">
-            <div class="col-md-4 offset-md-4">
-                <form method="post" action="/login">
-                    <!-- Ustaw odpowiedni action -->
-                    <div class="mb-3">
-                        <label for="inputEmail" class="form-label">Adres email</label>
-                        <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Wpisz email">
-                        <div id="emailHelp" class="form-text">Nie udostępniamy nikomu Twojego adresu email.</div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="inputPassword" class="form-label">Hasło</label>
-                        <input type="password" class="form-control" id="inputPassword" placeholder="Hasło">
-                    </div>
+    <div class="container">
+        <h1 class="display-4 text-center">Welcome</h1>
+        <p class="lead text-center">Zarejestruj się</p>
 
-                    <button type="button" class="btn btn-success" id="but_zarejestruj">Zarejestruj się</button>
-                </form>
+        <span class="material-symbols-outlined text-center">
+            <i class="fas fa-user-plus"></i>
+        </span>
+
+        <form method="post" action="/register">
+            <div class="mb-3">
+                <label for="inputEmail" class="form-label">Adres email</label>
+                <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Wpisz email">
+                <div id="emailHelp" class="form-text">Nie udostępniamy nikomu Twojego adresu email.</div>
             </div>
-        </div>
+            <div class="mb-3">
+                <label for="inputPassword" class="form-label">Hasło</label>
+                <input type="password" class="form-control" id="inputPassword" placeholder="Hasło">
+            </div>
+
+            <button type="button" class="btn btn-success d-block mx-auto" id="but_zarejestruj">Zarejestruj się</button>
+        </form>
     </div>
 
     <script type="module" src="/lib/bootstrap/dist/js/Rejestracja.js"></script>

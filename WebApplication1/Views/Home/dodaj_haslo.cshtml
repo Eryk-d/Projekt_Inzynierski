@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Dodaj nowe hasło";
+    Layout = "_Layout";
+}
+
+<div class="row">
+        <div class="col-md-6 offset-md-3">
+            <h2>Dodaj nowe hasło</h2>
+            <hr>
+            <form id="form1" class="mb-3">
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Tytuł" id="title">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Login" id="login">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Hasło" id="pass">
+                </div>
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Klucz szyfrujący" id="key">
+					Każde hasło musi być zabezpieczone <strong>tym samym kluczem.</strong>
+                    <br>Ten Klucz to jedyny sposób, aby wyświetlić hasła.
+                    <br><strong>Zapamietaj lub zapisz go!</strong>
+                </div>
+                <button type="submit" class="btn btn-primary">Zapisz</button>
+            </form>
+        </div>
+    </div>
+
+
+<script type="module" src="/lib/bootstrap/dist/js/CRUD_C.js"></script>
