@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApplication1.Models;
+using System.Threading.Tasks;
 
 namespace WebApplication1.Controllers
 {
@@ -8,9 +9,12 @@ namespace WebApplication1.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public IActionResult CheckPasswordStrength(string password)
         {
-            _logger = logger;
+            var isStrong = PasswordStrengthChecker.IsPasswordStrong(password);
+            // Możesz tutaj przekazać wynik do widoku lub obsłużyć inaczej, np. wyświetlić komunikat
+            ViewBag.IsPasswordStrong = isStrong;
+            return View("Ocena"); // Powrót do widoku głównego z informacją o sile hasła
         }
 
         public IActionResult Index()
@@ -70,11 +74,15 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
-
+        public IActionResult Ocena()
+        {
+            return View();
+        }
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
     }
 }

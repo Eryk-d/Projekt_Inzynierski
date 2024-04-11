@@ -1,0 +1,92 @@
+﻿@{
+    ViewData["Title"] = "Ocena hasła";
+    Layout = "_Layout";
+}
+<head>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css" rel="stylesheet"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
+    <style>
+        .container2 {
+            max-width: 400px; /* Zwiększenie maksymalnej szerokości */
+            margin: 50px auto; /* Wyśrodkowanie kontenera z zachowaniem marginesu u góry */
+        }
+
+        .toggle-password {
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-10%);
+            color: #7a797e;
+        }
+
+        .form-group {
+            position: relative;
+        }
+
+        .material-symbols-outlined {
+            font-size: 150px;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+
+    </style>
+</head>
+
+<div class="container2">
+    <center>
+    <h1 class="display-4">Ocena haseł</h1>
+        <span class="material-symbols-outlined">
+            shield_question
+        </span>
+	</center>
+    <form asp-action="CheckPasswordStrength" method="post">
+        <div class="form-group" style="position: relative;">
+            <label for="password">Wprowadź hasło:</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+            <span class="toggle-password" onclick="togglePasswordVisibility()">
+                <i class="fa fa-eye" id="toggleEye"></i>
+            </span>
+        </div>
+        <button type="submit" class="btn btn-primary">Sprawdź siłę hasła</button>
+    </form>
+
+    @if (ViewBag.IsPasswordStrong != null)
+    {
+        <div class="mt-3">
+            @if ((bool)ViewBag.IsPasswordStrong)
+            {
+                <div class="alert alert-success" role="alert">
+                    Hasło jest silne.
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-danger" role="alert">
+                    Hasło nie jest wystarczająco silne. Upewnij się, że zawiera co najmniej 8 znaków, w tym duże litery, małe litery, cyfry i znaki specjalne.
+                </div>
+            }
+        </div>
+    }
+
+</div>
+
+<script>
+    function togglePasswordVisibility() {
+        var passwordInput = document.getElementById("password");
+        var toggleEye = document.getElementById("toggleEye");
+        if (passwordInput.type === "password") {
+            passwordInput.type = "text";
+            toggleEye.classList.remove("fa-eye");
+            toggleEye.classList.add("fa-eye-slash");
+        } else {
+            passwordInput.type = "password";
+            toggleEye.classList.remove("fa-eye-slash");
+            toggleEye.classList.add("fa-eye");
+        }
+    }
+</script>
