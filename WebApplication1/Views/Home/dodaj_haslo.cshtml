@@ -3,7 +3,33 @@
     Layout = "_Layout";
 }
 
-<div class="row">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dodaj nowe hasło</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <style>
+        .field-container {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-icon {
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            color: #000;
+        }
+
+        .form-control {
+            padding-right: 30px; /* Ensure there's room for the icon inside the input */
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
         <div class="col-md-6 offset-md-3">
             <h2>Dodaj nowe hasło</h2>
             <hr>
@@ -14,19 +40,39 @@
                 <div class="mb-3">
                     <input type="text" class="form-control" placeholder="Login" id="login">
                 </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Hasło" id="pass">
+                <div class="mb-3 field-container">
+                    <input type="password" class="form-control" placeholder="Hasło" id="pass">
+                    <i class="fas fa-eye toggle-icon" onclick="toggleVisibility('pass')"></i>
                 </div>
-                <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Klucz szyfrujący" id="key">
-					Każde hasło musi być zabezpieczone <strong>tym samym kluczem.</strong>
+                <div class="mb-3 field-container">
+                    <input type="password" class="form-control" placeholder="Klucz szyfrujący" id="key">
+                    <i class="fas fa-eye toggle-icon" onclick="toggleVisibility('key')"></i>
+                </div>
+                <div>
+                    Każde hasło musi być zabezpieczone <strong>tym samym kluczem.</strong>
                     <br>Ten Klucz to jedyny sposób, aby wyświetlić hasła.
-                    <br><strong>Zapamietaj lub zapisz go!</strong>
+                    <br><strong>Zapamiętaj lub zapisz go!</strong>
                 </div>
                 <button type="submit" class="btn btn-primary">Zapisz</button>
             </form>
         </div>
     </div>
 
+    <script>
+        function toggleVisibility(fieldId) {
+            var inputField = document.getElementById(fieldId);
+            var icon = inputField.nextElementSibling; // Assuming the icon is the immediate next sibling
+            if (inputField.type === "password") {
+                inputField.type = "text";
+                icon.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                inputField.type = "password";
+                icon.classList.replace("fa-eye-slash", "fa-eye");
+            }
+        }
+    </script>
 
-<script type="module" src="/lib/bootstrap/dist/js/CRUD_C.js"></script>
+    <script type="module" src="/lib/bootstrap/dist/js/CRUD_C.js"></script>
+
+</body>
+</html>

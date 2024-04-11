@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Logowanie";
+    ViewData["Title"] = "Zaloguj się";
 }
 <!DOCTYPE html>
 <html lang="pl">
@@ -10,36 +10,47 @@
     <meta http-equiv="Permissions-Policy-Report-Only" content="geolocation 'self'; microphone 'self'; camera 'self'">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <!-- Link do stylów Bootstrap -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css" />
-
     <script src="https://apis.google.com/js/platform.js" async defer></script>
-    <title>Rejestracja</title>
-
     <style>
-        .container {
-            max-width: 400px; /* Maksymalna szerokość kontenera formularza */
-            margin-top: 50px; /* Odstęp od góry */
+        .container2 {
+            max-width: 400px; /* Zwiększenie maksymalnej szerokości */
+            margin: 50px auto; /* Wyśrodkowanie kontenera z zachowaniem marginesu u góry */
         }
 
         .material-symbols-outlined {
-            font-size: 150px; /* Rozmiar ikony */
-            margin-bottom: 20px; /* Odstęp od elementów powyżej */
-            display: block; /* Ustawienie ikony jako bloku */
-            margin-left: auto; /* Wyśrodkowanie ikony poziomo */
-            margin-right: auto; /* Wyśrodkowanie ikony poziomo */
+            font-size: 150px;
+            margin-bottom: 20px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
         }
 
         .form-text {
-            font-size: 14px; /* Rozmiar tekstu pomocy */
+            font-size: 14px;
+        }
+
+        .password-toggle {
+            position: relative;
+        }
+
+        .password-icon {
+            cursor: pointer;
+            position: absolute;
+            right: 10px;
+            top: calc(50%); /* Center vertically, adjust here if needed */
+            color: #000;
+            z-index: 2;
+            transform: translateY(50%); /* Use transform to fine-tune vertical positioning */
+        }
+
+        .password-input {
+            padding-right: 30px; /* Make room for the icon inside the input */
         }
     </style>
 </head>
 <body>
-
-    </nav>
-
-    <div class="container">
+    <div class="container2">
         <h1 class="display-4 text-center">Welcome</h1>
         <p class="lead text-center">Loguj się</p>
 
@@ -53,17 +64,31 @@
                 <input type="email" class="form-control" id="inputEmail" aria-describedby="emailHelp" placeholder="Wpisz email">
                 <div id="emailHelp" class="form-text">Nie udostępniamy nikomu Twojego adresu email.</div>
             </div>
-            <div class="mb-3">
+            <div class="mb-3 password-toggle">
                 <label for="inputPassword" class="form-label">Hasło</label>
-                <input type="password" class="form-control" id="inputPassword" placeholder="Hasło">
+                <input type="password" class="form-control password-input" id="inputPassword" placeholder="Hasło">
+                <i class="fas fa-eye password-icon" onclick="togglePasswordVisibility()"></i>
             </div>
 
             <button type="button" class="btn btn-primary d-block mx-auto" id="but_zaloguj">Zaloguj się</button>
         </form>
     </div>
 
-    <!-- Skrypty Bootstrapa -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function togglePasswordVisibility() {
+            var passwordInput = document.getElementById("inputPassword");
+            var passwordIcon = document.querySelector(".password-icon");
+            if (passwordInput.type === "password") {
+                passwordInput.type = "text";
+                passwordIcon.classList.replace("fa-eye", "fa-eye-slash");
+            } else {
+                passwordInput.type = "password";
+                passwordIcon.classList.replace("fa-eye-slash", "fa-eye");
+            }
+        }
+    </script>
+
     <script type="module" src="/lib/bootstrap/dist/js/Zaloguj.js"></script>
 </body>
 </html>
