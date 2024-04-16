@@ -7,8 +7,8 @@ public class EmailService
     {
         var emailMessage = new MimeMessage();
 
-        emailMessage.From.Add(new MailboxAddress("inz", "eroero3201@onet.pl"));
-        emailMessage.To.Add(new MailboxAddress("opis", toEmail));
+        emailMessage.From.Add(new MailboxAddress("Zapytanie o Menadżer haseł", "eroero3201@onet.pl"));
+        emailMessage.To.Add(new MailboxAddress("Obsługa Klienta", "eryk.delikat@gmail.com"));
         emailMessage.Subject = subject;
         emailMessage.Body = new TextPart("html") { Text = message };
 

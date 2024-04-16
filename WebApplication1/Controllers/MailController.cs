@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Org.BouncyCastle.Tls;
 using System.Threading.Tasks;
 
 namespace WebApplication1.Controllers
@@ -22,7 +23,7 @@ namespace WebApplication1.Controllers
         {
             try
             {
-                string subject = "Wiadomość od: " + name;  // Ustalenie tematu wiadomości
+                string subject = "Zapytanie od " + name + " (" + email+ ")";  // Ustalenie tematu wiadomości
                 await _emailService.SendEmailAsync(email, subject, message);
                 TempData["Message"] = "Wiadomość została wysłana pomyślnie!";
             }
