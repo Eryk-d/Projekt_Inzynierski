@@ -1,7 +1,7 @@
 ﻿import { auth, db } from "/lib/bootstrap/dist/js/Config.js";
 import { getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
-import { deleteDoc, doc } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
+import { deleteDoc, doc, updateDoc  } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
 
 const card = document.querySelector('#card');
 const form = document.querySelector('#form2');
@@ -71,24 +71,24 @@ function getDataFromFirestore(userId) {
     getDocs(q).then(querySnapshot => {
         querySnapshot.forEach(async (doc) => {
             const item = doc.data();
-            // Odszyfrowanie hasła przed wyświetleniem
-            const decryptedPass = await decryptData(item.pass, item.iv, item.salt, keys.value); //pobieramy keys z form2
+            const decryptedPass = await decryptData(item.pass, item.iv, item.salt, keys.value);
             card.innerHTML +=
                 `<div class="card" style="background-color: #40C9FF; border: 3px solid black;">
-            <div class="card-body">
-                <p>Nazwa: ${item.title}</p>
-                <p>Login: ${item.login}</p>
-                <p>Hasło: ${decryptedPass}</p> <!-- Wyświetlanie odszyfrowanego hasła -->
-                <button type="button" class="btn btn-danger delete_pass" data-doc-id="${doc.id}">Usuń</button>
-            </div>
-        </div><br>`;
-
+                    <div class="card-body">
+                        <p>Nazwa: ${item.title}</p>
+                        <p>Login: ${item.login}</p>
+                        <p>Hasło: ${decryptedPass}</p>
+                        <button type="button" class="btn btn-danger delete_pass" data-doc-id="${doc.id}">Usuń</button>
+                        <button type="button" class="btn btn-primary update_pass" data-doc-id="${doc.id}" data-title="${item.title}" data-login="${item.login}" data-pass="${decryptedPass}">Aktualizuj</button>
+                    </div>
+                </div><br>`;
         });
     }).catch(error => {
         console.error("Error getting documents: ", error);
         alert("nie dziala");
     });
 }
+
 
 
 
@@ -122,4 +122,96 @@ document.addEventListener('click', function (e) {
     }
 });
 
+document.addEventListener('click', function (e) {
+    if (e.target && e.target.classList.contains('update_pass')) {
+        const docId = e.target.getAttribute('data-doc-id');
+        const title = e.target.getAttribute('data-title');
+        const login = e.target.getAttribute('data-login');
+        const password = e.target.getAttribute('data-pass');
+        const keys = document.getElementById('keys').value;  // Pobierz wartość z pierwszego inputu
+
+        // Wypełnienie formularza danymi i dodanie klas Bootstrap
+        const updateDiv = document.getElementById('update_password');
+        updateDiv.innerHTML = `
+            <form id="updateForm" class="p-3">
+                <input type="hidden" name="docId" value="${docId}" />
+                <div class="mb-3">
+                    <label for="title" class="form-label">Nazwa:</label>
+                    <input type="text" class="form-control" id="title" name="title" value="${title}" required />
+                </div>
+                <div class="mb-3">
+                    <label for="login" class="form-label">Login:</label>
+                    <input type="text" class="form-control" id="login" name="login" value="${login}" required />
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Hasło:</label>
+                    <input type="text" class="form-control" id="password" name="password" value="${password}" required />
+                </div>
+                <div class="mb-3">
+                    <label for="keys" class="form-label">Klucz:</label>
+                    <input type="text" class="form-control" id="keys" name="keys" placeholder="Podaj Klucz" value="${keys}" required />
+                </div>
+                <button type="submit" class="btn btn-primary">Zapisz zmiany</button>
+            </form><hr>`;
+    }
+});
+
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const updateDiv = document.getElementById('update_password');
+
+    // Obsługa zdarzenia submit dla formularza aktualizacji
+    updateDiv.addEventListener('submit', async function (event) {
+        event.preventDefault(); // Zapobieganie standardowemu zachowaniu formularza
+
+        const form = event.target;
+        const docId = form.docId.value;
+        const title = form.title.value;
+        const login = form.login.value;
+        const password = form.password.value;
+        const userKey = "asdfg"; // Klucz użytkownika do szyfrowania, załóżmy, że jest dostępny
+
+        try {
+            // Szyfrowanie hasła przed aktualizacją
+            const encryptedData = await encryptData(password, userKey);
+
+            // Uaktualnienie dokumentu w Firestore
+            await updateDoc(doc(db, "passwords", docId), {
+                title: title,
+                login: login,
+                pass: encryptedData.encrypted, // Zaszyfrowane hasło
+                iv: encryptedData.iv, // IV użyte do szyfrowania
+                salt: encryptedData.salt // Salt użyty do szyfrowania
+            });
+            console.log('Dokument został zaktualizowany');
+            alert('Dane zostały zaktualizowane');
+            location.reload(); // Opcjonalnie, odświeżenie strony
+        } catch (error) {
+            console.error("Błąd podczas aktualizacji dokumentu: ", error);
+            alert('Nie udało się zaktualizować danych');
+        }
+    });
+});
+
+
+//modul aktualizacji
+
+
+
+// Zaktualizuj funkcję szyfrowania, aby używała generateKeyFromPassword
+async function encryptData(plainText, password) {
+    const salt = window.crypto.getRandomValues(new Uint8Array(16)); // Generuj unikalny salt
+    const iv = window.crypto.getRandomValues(new Uint8Array(12)); // Generuj losowy IV
+    const key = await generateKeyFromPassword(password, salt); // Generuj klucz z hasła i salt
+    const algo = { name: 'AES-GCM', iv: iv };
+    const encoded = new TextEncoder().encode(plainText);
+    const encrypted = await window.crypto.subtle.encrypt(algo, key, encoded);
+
+    return {
+        encrypted: window.btoa(String.fromCharCode.apply(null, new Uint8Array(encrypted))),
+        iv: window.btoa(String.fromCharCode.apply(null, iv)),
+        salt: window.btoa(String.fromCharCode.apply(null, salt)), // Zwróć salt również, będzie potrzebny do deszyfrowania
+    };
+}
 

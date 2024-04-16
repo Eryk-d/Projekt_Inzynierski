@@ -17,6 +17,7 @@ namespace WebApplication1.Controllers
             return View("Ocena"); // Powrót do widoku głównego z informacją o sile hasła
         }
 
+
         public IActionResult Index()
         {
             return View();

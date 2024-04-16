@@ -61,7 +61,7 @@
     </span>
     <p>Masz pytanie? Napisz do nas!</p>
 
-    <form action="/TwojKontroler/WyslijEmail" method="post">
+    <form asp-controller="Mail" asp-action="SendEmail" method="post">
         <div class="form-group">
             <label for="name">Imię:</label>
             <input type="text" id="name" name="name" required>
@@ -78,4 +78,9 @@
             <button type="submit">Wyślij</button>
         </div>
     </form>
+
 </div>
+@if (ViewBag.Message != null)
+{
+    <p>@ViewBag.Message</p>
+}

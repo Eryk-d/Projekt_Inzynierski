@@ -48,17 +48,20 @@
             <hr>
             <form id="form1" class="mb-3">
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Tytuł" id="title">
+
+                    <input type="text" class="form-control" placeholder="Tytuł" id="title" required>
                 </div>
                 <div class="mb-3">
-                    <input type="text" class="form-control" placeholder="Login" id="login">
+
+                    <input type="text" class="form-control" placeholder="Login" id="login" required>
                 </div>
                 <div class="mb-3 field-container">
-                    <input type="password" class="form-control" placeholder="Hasło" id="pass">
+					<!--onfocus aby zmylic przegladarke zeby nie widziala pola password-->
+					<input type="text" class="form-control" placeholder="Hasło" id="pass" required onfocus="this.setAttribute('type', 'password');">
                     <i class="fas fa-eye toggle-icon" onclick="toggleVisibility('pass')"></i>
                 </div>
                 <div class="mb-3 field-container">
-                    <input type="password" class="form-control" placeholder="Klucz szyfrujący" id="key">
+                    <input type="text" class="form-control" placeholder="Klucz szyfrujący" id="key" required onfocus="this.setAttribute('type', 'password');">
                     <i class="fas fa-eye toggle-icon" onclick="toggleVisibility('key')"></i>
                 </div>
                 <div>
