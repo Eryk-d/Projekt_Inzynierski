@@ -27,18 +27,38 @@
     <div class="row">
         <div class="col-md-6 offset-md-3">
             <hr>
-            <h2>Oto lista twoich haseł.</h2><br>
+            <h2>Oto lista haseł.</h2>
+            <!-- Lista rozwijana z hasłami -->
+            <select id="passwordList" class="form-select mb-3">
+                <option selected>Wybierz hasło...</option>
+            </select>
+
+            <!-- Formularz do wprowadzenia klucza i deszyfrowania wybranego hasła -->
+            <form id="decryptForm" class="mb-3">
+                <div class="mb-3">
+                    <input type="text" class="form-control" placeholder="Podaj Klucz" id="decryptKey" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Deszyfruj wybrane hasło</button>
+            </form>
+            <!-- Miejsce na zdeszyfrowane hasło -->
+            <!-- Kontener na zdeszyfrowane hasło -->
+            <div id="decryptedPasswordDisplay" class="mt-3"></div>
+
+
+            <hr>
+            <h2>Oto lista wszystkich twoich haseł.</h2><br>
             <form id="form2" class="mb-3">
                 <div class="mb-3">
                     <input type="text" class="form-control" placeholder="Podaj Klucz" id="keys" required>
                 </div>
-                <button type="submit" class="btn btn-primary">Deszyfruj hasła</button>
+                <button type="submit" class="btn btn-primary">Deszyfruj wszystkie hasła</button>
             </form>
             <button id="toggleButton" class="btn btn-secondary mb-3">Pokaż/Ukryj hasła</button>
             <hr>
         </div>
     </div>
 </div>
+
 
 <div id="update_password" class="container" style="width: 50%">
 

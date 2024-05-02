@@ -1,11 +1,68 @@
 ﻿import { auth, db } from "/lib/bootstrap/dist/js/Config.js";
-import { getDocs, collection, query, where } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
+import { getDocs, getDoc, collection, query, where } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
 import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-auth.js";
 import { deleteDoc, doc, updateDoc  } from "https://www.gstatic.com/firebasejs/9.10.0/firebase-firestore.js";
 
 const card = document.querySelector('#card');
 const form = document.querySelector('#form2');
 const keys = document.querySelector('#keys');
+
+
+
+document.getElementById('decryptForm').addEventListener('submit', async function (event) {
+    event.preventDefault();  // Zapobiega odświeżeniu strony
+    const selectedId = document.getElementById('passwordList').value;
+    const decryptionKey = document.getElementById('decryptKey').value;
+    const decryptedPasswordDisplay = document.getElementById('decryptedPasswordDisplay');
+
+    if (!selectedId || selectedId === 'Wybierz hasło...') {
+        alert('Proszę wybrać hasło z listy.');
+        return;
+    }
+    if (!decryptionKey) {
+        alert('Proszę wpisać klucz deszyfrowania.');
+        return;
+    }
+
+    const docRef = doc(db, "passwords", selectedId);  // Tworzy referencję do dokumentu
+    try {
+        const docSnap = await getDoc(docRef);  // Pobiera dokument z Firestore
+
+        if (docSnap.exists()) {
+            const data = docSnap.data();
+            decryptData(data.pass, data.iv, data.salt, decryptionKey)
+                .then(decryptedPass => {
+                    // Używamy innerHTML, aby stworzyć kafelek z pełnymi informacjami
+                    decryptedPasswordDisplay.innerHTML = `
+                        <div class="card" style="background-color: #40C9FF; border: 3px solid black;">
+                            <div class="card-body">
+                                <p>Nazwa: ${data.title}</p>
+                                <p>Login: ${data.login}</p>
+                                <p>Hasło: ${decryptedPass}</p>
+                                <button type="button" class="btn btn-danger delete_pass" data-doc-id="${selectedId}">Usuń</button>
+                                <button type="button" class="btn btn-primary update_pass" data-doc-id="${selectedId}" data-title="${data.title}" data-login="${data.login}" data-pass="${decryptedPass}">Aktualizuj</button>
+                            </div>
+                        </div>
+                    `;
+                    decryptedPasswordDisplay.style.display = 'block'; // Zapewnia widoczność elementu
+                })
+                .catch(() => {
+                    alert('Błąd deszyfrowania: Nieprawidłowy klucz.');
+                    decryptedPasswordDisplay.innerHTML = ''; // Czyści zawartość w przypadku błędu
+                });
+        } else {
+            alert('Nie znaleziono wybranego hasła.');
+            decryptedPasswordDisplay.innerHTML = ''; // Czyści zawartość w przypadku braku dokumentu
+        }
+    } catch (error) {
+        console.error('Błąd przy pobieraniu danych: ', error);
+        alert('Nie udało się pobrać danych.');
+        decryptedPasswordDisplay.innerHTML = ''; // Czyści zawartość w przypadku błędu pobierania
+    }
+});
+
+
+
 
 function base64ToArrayBuffer(base64) {
     const binaryString = window.atob(base64);
@@ -214,4 +271,33 @@ async function encryptData(plainText, password) {
         salt: window.btoa(String.fromCharCode.apply(null, salt)), // Zwróć salt również, będzie potrzebny do deszyfrowania
     };
 }
+
+function loadPasswordsIntoDropdown(userId) {
+    const q = query(collection(db, "passwords"), where("uid", "==", userId));
+    getDocs(q).then(querySnapshot => {
+        querySnapshot.forEach(doc => {
+            const item = doc.data();
+            const option = document.createElement('option');
+            option.value = doc.id;
+            option.textContent = item.title;
+            passwordList.appendChild(option);
+        });
+    }).catch(error => {
+        console.error("Error loading passwords into dropdown: ", error);
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Wywołanie `onAuthStateChanged` aby upewnić się, że użytkownik jest zalogowany
+    onAuthStateChanged(auth, user => {
+        if (user) {
+            console.log('Zalogowany jako:', user.uid);
+            loadPasswordsIntoDropdown(user.uid); // Ładowanie listy rozwijanej od razu po załadowaniu strony
+        } else {
+            console.log("Brak zalogowanego użytkownika. Funkcjonalności związane z danymi użytkownika nie będą dostępne.");
+        }
+    });
+
+    // Dodatkowy kod, jeśli jest potrzebny do obsługi innych elementów interfejsu, np. formularzy czy przycisków
+});
 
