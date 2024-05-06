@@ -5,7 +5,7 @@ const logout = document.querySelector('#logout-btn');
 logout.addEventListener('click', () => {
     signOut(auth).then(() => {
         window.location = '/'
-        alert('Wylogowano pomyślnie')
+        //alert('Zostaniesz Wylogowany')
     }).catch((error) => {
         console.log(error);
     });
