@@ -192,6 +192,7 @@ document.addEventListener('click', function (e) {
         updateDiv.innerHTML = `
             <form id="updateForm" class="p-3">
                 <input type="hidden" name="docId" value="${docId}" />
+                 <h2>Aktualizuj dane.</h2>
                 <div class="mb-3">
                     <label for="title" class="form-label">Nazwa:</label>
                     <input type="text" class="form-control" id="title" name="title" value="${title}" required />
