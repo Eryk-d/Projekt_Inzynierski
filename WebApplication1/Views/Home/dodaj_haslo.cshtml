@@ -46,30 +46,34 @@
                 post_add
             </span>
             <hr>
-            <form id="form1" class="mb-3">
-                <div class="mb-3">
+            <form id="form1" class="mb-3" >
 
-                    <input type="text" class="form-control" placeholder="Tytuł" id="title" required>
+                <b style="font-size: 20px;">Tytuł:</b>
+                <div class="mb-3 field-container">
+                    <input type="text" class="form-control" placeholder="Podaj tytuł:" id="title" required>
                 </div>
-                <div class="mb-3">
-
-                    <input type="text" class="form-control" placeholder="Login" id="login" required>
+				<b style="font-size: 20px;">Login:</b>
+                <div class="mb-3 field-container">
+                    <input type="text" class="form-control" placeholder="Podaj login" id="login" required>
                 </div>
+				<b style="font-size: 20px;">Hasło:</b>
                 <div class="mb-3 field-container">
 					<!--onfocus aby zmylic przegladarke zeby nie widziala pola password-->
-					<input type="text" class="form-control" placeholder="Hasło" id="pass" required onfocus="this.setAttribute('type', 'password');">
+                    <input type="text" class="form-control" placeholder="Podaj hasło" id="pass" required onfocus="this.setAttribute('type', 'password');">
                     <i class="fas fa-eye toggle-icon" onclick="toggleVisibility('pass')"></i>
                 </div>
+				<b style="font-size: 20px;">Klucz szyfrujący:</b>
                 <div class="mb-3 field-container">
-                    <input type="text" class="form-control" placeholder="Klucz szyfrujący" id="key" required onfocus="this.setAttribute('type', 'password');">
+
+                    <input type="text" class="form-control" placeholder="Podaj klucz szyfrujący" id="key" required onfocus="this.setAttribute('type', 'password');">
                     <i class="fas fa-eye toggle-icon" onclick="toggleVisibility('key')"></i>
                 </div>
-                <div>
+                <div style="font-size: 20px;">
                     Każde hasło musi być zabezpieczone <strong>tym samym kluczem.</strong>
                     <br>Ten Klucz to jedyny sposób, aby wyświetlić hasła.
                     <br><strong>Zapamiętaj lub zapisz go!</strong>
                 </div>
-                <button type="submit" class="btn btn-primary">Zapisz</button>
+                <button style="font-size: 22px" type="submit" class="btn btn-primary">Zapisz</button>
             </form>
         </div>
     </div>
